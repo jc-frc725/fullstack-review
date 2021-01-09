@@ -21,4 +21,6 @@ let save = (/* TODO */) => {
   // the MongoDB
 }
 
+let newRepo = new Repo({name: "Hello World"}).save();
+
 module.exports.save = save;

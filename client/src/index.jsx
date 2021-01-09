@@ -19,8 +19,8 @@ class App extends React.Component {
     // TODO
     axios.post('/repos', term)
       .then(reponse => {
-        console.lo('POST request sent and this is the response.')
-      })
+        console.log('POST request sent and this is the response.')
+      });
   }
 
   render () {
