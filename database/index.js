@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/repoDB');
+mongoose.connect('mongodb://localhost:27017/repoDB',)
+  .then(() => console.log('Connected to MongoDB'));
 // this is connecting to localhost but no port is given
 // goes to "fetcher" db, probably make something different
 let repoSchema = mongoose.Schema({
@@ -44,6 +45,16 @@ let save = (repos) => {
   // db.repos.insert( { name: "user/repo_name", stargazers: 5, watchers: 3, forks: 0 } )
 }
 
+let getTop25 = (callback) => {
+  Repo.find((err, repoData) => {
+    if (err) {
+      console.error(err);
+    } else {
+      callback(repoData);
+    }
+  })
+}
+
 //let newRepo = new Repo({name: "Hello World1", stargazers: 2, watchers: 3, forks: 0}).save()
 
-module.exports.save = save;
+module.exports= {save, getTop25}

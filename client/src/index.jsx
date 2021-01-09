@@ -13,13 +13,29 @@ class App extends React.Component {
     }
     // probably put this.search = this.search.bind(this);
   }
+  componentDidMount() {
+    this.getRepos();
+  }
+
+
+  getRepos() {
+    const list = [];
+    axios.get('/repos')
+      .then(response =>
+        this.setState({repos: response.data}))
+      .catch(error => console.log(error));
+  }
+
+  printRepos(repos) {
+    console.log(repos);
+  }
 
   search (term) {
     console.log(`${term} was searched`);
     let user = {username: term}
     axios.post('/repos', user)
       .then(response => {
-        console.log(response);
+        //console.log(response);
       });
   }
 
