@@ -18,13 +18,25 @@ let repoSchema = mongoose.Schema({
 
 // when collection is created,
 // Mongoose automatically looks for lowercase, plural version of
-// given Model name (i.e. collection "repos" down below should live in "fetcher" db)
+// given Model name (i.e. collection "repos" down below should live initial "fetcher" db)
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repos) => {
   repos.forEach(repo => {
-    console.log(repo);
-    //console.log(repo.schema);
+    let newUserRepo = new Repo ({
+      name: repo.name,
+      stargazers: repo.stargazers,
+      watchers: repo.watchers,
+      forks: repo.forks
+    });
+    // insert newUserRepo into mongoDB, in the repoDB, repos collection
+    newUserRepo.save((err, newUserRepo) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(`success? repo name: ${newUserRepo.name}`)
+      }
+    })
   })
   // TODO: Your code here
   // This function should save a repo or repos to
