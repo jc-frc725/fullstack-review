@@ -17,7 +17,9 @@ let getReposByUsername = (username, callback) => {
 
   axios.get(options.url, options.headers)
     .then(response => {
-      callback(response)
+      // response object contains misc request info,
+      // actual github data is in .data property
+      callback(response.data)
     })
     .catch(error => {
       console.log(error);

@@ -1,6 +1,7 @@
 const express = require('express');
 let app = express();
 const git = require('../helpers/github.js');
+const db = require('../database/index.js');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(express.json());
@@ -13,13 +14,30 @@ app.use((req, res, next) => {
 app.post('/repos', function (req, res) {
   // TODO - your code here!
   console.log(req.body);
+  //let userRepos;
   // This route should take the github username provided
-  git.getReposByUsername(req.body.username, (userRepos) => {
-    console.log(userRepos);
-  })
+  git.getReposByUsername(req.body.username, (githubData) => {
+    let userRepos = []
 
-  // and get the repo information from the github API, then
-  // save the repo information in the database
+    // take array and filter for stargazers_count, watchers_count, forks_count
+    githubData.forEach(repo => {
+      let currentRepo = {
+        name: repo.full_name,
+        stargazers: repo.stargazers_count,
+        watchers: repo.watchers_count,
+        forks: repo.forks_count
+      }
+      userRepos.push(currentRepo);
+    })
+    // and get the repo information from the github API, then
+    // save the repo information in the database
+    db.save(userRepos);
+
+
+  });
+
+
+
   res.send(`${JSON.stringify(req.body)} received`);
 });
 
