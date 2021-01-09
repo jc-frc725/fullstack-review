@@ -16,10 +16,10 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
-    axios.post('/repos', term)
-      .then(reponse => {
-        console.log('POST request sent and this is the response.')
+    let user = {username: term}
+    axios.post('/repos', user)
+      .then(response => {
+        console.log(response);
       });
   }
 
