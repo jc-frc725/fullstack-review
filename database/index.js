@@ -1,16 +1,13 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/repoDB',)
   .then(() => console.log('Connected to MongoDB'));
-// this is connecting to localhost but no port is given
-// goes to "fetcher" db, probably make something different
-let repoSchema = mongoose.Schema({
-  // TODO: your schema here!
 
+let repoSchema = mongoose.Schema({
   name: {type: String, unique: true},
   stargazers: Number,
   watchers: Number,
-  forks: Number
-
+  forks: Number,
+  url: String
 });
 
 
@@ -28,9 +25,9 @@ let save = (repos) => {
       name: repo.name,
       stargazers: repo.stargazers,
       watchers: repo.watchers,
-      forks: repo.forks
+      forks: repo.forks,
+      url: repo.url
     });
-    // insert newUserRepo into mongoDB, in the repoDB, repos collection
     newUserRepo.save((err, newUserRepo) => {
       if (err) {
         console.error(err);
@@ -42,14 +39,9 @@ let save = (repos) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
-  // db.repos.insert( { name: "user/repo_name", stargazers: 5, watchers: 3, forks: 0 } )
 }
 
 let getTop25 = (callback) => {
-  // use limit to limit to just 25 docs
-  // need sort by top 25
-  // .sort()
-
 
   Repo.find().
     sort({stargazers: -1}).
@@ -58,15 +50,7 @@ let getTop25 = (callback) => {
       callback(data)
     });
 
-  // Repo.find((err, repoData) => {
-  //   if (err) {
-  //     console.error(err);
-  //   } else {
-  //     callback(repoData);
-  //   }
-  // })
 }
 
-//let newRepo = new Repo({name: "Hello World1", stargazers: 2, watchers: 3, forks: 0}).save()
 
 module.exports= {save, getTop25}

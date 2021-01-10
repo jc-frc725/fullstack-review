@@ -17,13 +17,13 @@ app.post('/repos', function (req, res) {
   git.getReposByUsername(req.body.username, (githubData) => {
     let userRepos = []
 
-    // take array and filter for stargazers_count, watchers_count, forks_count
     githubData.forEach(repo => {
       let currentRepo = {
         name: repo.full_name,
         stargazers: repo.stargazers_count,
         watchers: repo.watchers_count,
-        forks: repo.forks_count
+        forks: repo.forks_count,
+        url: repo.html_url
       }
       userRepos.push(currentRepo);
     })
@@ -35,14 +35,11 @@ app.post('/repos', function (req, res) {
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
   let response;
   db.getTop25((repoData) => {
-    console.log(repoData);
+    //console.log(repoData);
     res.send(repoData);
   })
-  //res.send(response);
 });
 
 let port = 1128;

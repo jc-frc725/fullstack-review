@@ -7,7 +7,7 @@ const RepoList = ({repos}) => (
     There are {repos.length} repos.
     <div style={{marginTop: "10px"}}>
       {repos.map(repo =>
-        <Repo name={repo.name} key={repo._id} />
+        <Repo name={repo.name} url={repo.url} key={repo._id} />
       )}
     </div>
   </div>
