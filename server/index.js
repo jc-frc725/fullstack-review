@@ -12,8 +12,7 @@ app.use((req, res, next) => {
 })
 
 app.post('/repos', function (req, res) {
-  console.log(req.body);
-  // This route should take the github username provided
+  //console.log(req.body);
   git.getReposByUsername(req.body.username, (githubData) => {
     let userRepos = []
 
@@ -26,12 +25,12 @@ app.post('/repos', function (req, res) {
         url: repo.html_url
       }
       userRepos.push(currentRepo);
-    })
-    // and get the repo information from the github API, then
-    // save the repo information in the database
+    });
+
     db.save(userRepos);
+
   });
-  res.send(`If you see this, DB update may have succeeded. Check DB`);
+  res.send('immediately fetch from updated db');
 });
 
 app.get('/repos', function (req, res) {

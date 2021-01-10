@@ -36,9 +36,8 @@ let save = (repos) => {
       }
     })
   })
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
+
+  //getTop25(callback);
 }
 
 let getTop25 = (callback) => {

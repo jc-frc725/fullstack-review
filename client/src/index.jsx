@@ -19,7 +19,7 @@ class App extends React.Component {
 
 
   getRepos() {
-    const list = [];
+
     axios.get('/repos')
       .then(response =>
         this.setState({repos: response.data}))
@@ -35,8 +35,13 @@ class App extends React.Component {
     let user = {username: term}
     axios.post('/repos', user)
       .then(response => {
-        //console.log(response);
-      });
+        console.log(response);
+        this.getRepos();
+        //this.setState({repos: response.data})
+      })
+      .catch(error => console.log(error));
+
+    this.getRepos();
   }
 
   render () {
