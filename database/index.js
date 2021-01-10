@@ -46,13 +46,25 @@ let save = (repos) => {
 }
 
 let getTop25 = (callback) => {
-  Repo.find((err, repoData) => {
-    if (err) {
-      console.error(err);
-    } else {
-      callback(repoData);
-    }
-  })
+  // use limit to limit to just 25 docs
+  // need sort by top 25
+  // .sort()
+
+
+  Repo.find().
+    sort({stargazers: -1}).
+    limit(25)
+    .then(data => {
+      callback(data)
+    });
+
+  // Repo.find((err, repoData) => {
+  //   if (err) {
+  //     console.error(err);
+  //   } else {
+  //     callback(repoData);
+  //   }
+  // })
 }
 
 //let newRepo = new Repo({name: "Hello World1", stargazers: 2, watchers: 3, forks: 0}).save()
